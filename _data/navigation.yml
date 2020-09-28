@@ -5,3 +5,4 @@ main:
   - title: "BLOG"
     url: blog
   - title : "PUBLICATIONS"
+    url: publications
