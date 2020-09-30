@@ -10,4 +10,10 @@ var store = [{
         "tags": [],
         "url": "http://localhost:4444/jekyll/update/2020/09/27/gitbook.html",
         "teaser": null
+      },{
+        "title": "使用jekyll和minimal-mistakes主题搭建github博客",
+        "excerpt":"使用jekyll搭建github博客，minimal mistakes主题的使用配置及改动 安装jekyll 参考jekyll官方文档 安装依赖 jekyll依赖于ruby，首先安装依赖： $ sudo apt-get install gcc g++ make ruby-full build-essential zlib1g-dev 使用gem安装jekyll 我习惯于尽可能少的使用sudo权限，所以我会将jekyll以及其他使用gem安装的软件安装在用户的home目录上。 编辑~/.bashrc文件，写入一下内容： # Install Ruby Gems to ~/software/gems export GEM_HOME=\"$HOME/software/gems\" export PATH=\"$HOME/software/gems/bin:$PATH\" 然后 source ~/.bashrc 激活设置 安装jekyll和bundle $ gem install jekyll bundler 初次使用 创建一个新的blog目录并运行 $ jekyll new myblog $ cd myblog $ jekyll...","categories": [],
+        "tags": [],
+        "url": "http://localhost:4444/2020/09/29/jekyll-minimal-mistakes.html",
+        "teaser": null
       }]

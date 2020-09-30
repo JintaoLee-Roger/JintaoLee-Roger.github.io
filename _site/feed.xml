@@ -1,4 +1,35 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.1.1">Jekyll</generator><link href="http://localhost:4444/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4444/" rel="alternate" type="text/html" /><updated>2020-09-28T23:38:32+08:00</updated><id>http://localhost:4444/feed.xml</id><title type="html">Jintao Lee</title><subtitle>Personal blog of Jintao Lee</subtitle><entry><title type="html">本地远程连接服务器的jupyter notebook</title><link href="http://localhost:4444/jekyll/update/2020/09/27/jupyter-remote.html" rel="alternate" type="text/html" title="本地远程连接服务器的jupyter notebook" /><published>2020-09-27T23:23:03+08:00</published><updated>2020-09-27T23:23:03+08:00</updated><id>http://localhost:4444/jekyll/update/2020/09/27/jupyter-remote</id><content type="html" xml:base="http://localhost:4444/jekyll/update/2020/09/27/jupyter-remote.html">&lt;p&gt;本地机器远程连接服务器的jupyter notebook&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.1.1">Jekyll</generator><link href="http://localhost:4444/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4444/" rel="alternate" type="text/html" /><updated>2020-09-29T21:16:55+08:00</updated><id>http://localhost:4444/feed.xml</id><title type="html">Jintao Lee</title><subtitle>Personal blog of Jintao Lee</subtitle><entry><title type="html">使用jekyll和minimal-mistakes主题搭建github博客</title><link href="http://localhost:4444/2020/09/29/jekyll-minimal-mistakes.html" rel="alternate" type="text/html" title="使用jekyll和minimal-mistakes主题搭建github博客" /><published>2020-09-29T21:00:00+08:00</published><updated>2020-09-29T21:00:00+08:00</updated><id>http://localhost:4444/2020/09/29/jekyll-minimal-mistakes</id><content type="html" xml:base="http://localhost:4444/2020/09/29/jekyll-minimal-mistakes.html">&lt;p&gt;使用jekyll搭建github博客，minimal mistakes主题的使用配置及改动&lt;/p&gt;
+
+&lt;h2 id=&quot;安装jekyll&quot;&gt;安装jekyll&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;参考&lt;a href=&quot;https://jekyllrb.com/docs/installation/&quot;&gt;jekyll官方文档&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&quot;安装依赖&quot;&gt;安装依赖&lt;/h4&gt;
+&lt;p&gt;jekyll依赖于ruby，首先安装依赖：&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;apt-get &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;gcc g++ make ruby-full build-essential zlib1g-dev
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;使用gem安装jekyll&quot;&gt;使用gem安装jekyll&lt;/h4&gt;
+&lt;p&gt;我习惯于尽可能少的使用sudo权限，所以我会将jekyll以及其他使用gem安装的软件安装在用户的home目录上。
+编辑&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;~/.bashrc&lt;/code&gt;文件，写入一下内容：&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# Install Ruby Gems to ~/software/gems&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;GEM_HOME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$HOME&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/software/gems&quot;&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;PATH&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$HOME&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/software/gems/bin:&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$PATH&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;然后 &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;source ~/.bashrc&lt;/code&gt; 激活设置&lt;/p&gt;
+
+&lt;p&gt;安装jekyll和bundle&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;gem &lt;span class=&quot;nb&quot;&gt;install &lt;/span&gt;jekyll bundler
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;初次使用&quot;&gt;初次使用&lt;/h4&gt;
+&lt;p&gt;创建一个新的blog目录并运行&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;jekyll new myblog
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;myblog
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;jekyll serve
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><summary type="html">使用jekyll搭建github博客，minimal mistakes主题的使用配置及改动</summary></entry><entry><title type="html">本地远程连接服务器的jupyter notebook</title><link href="http://localhost:4444/jekyll/update/2020/09/27/jupyter-remote.html" rel="alternate" type="text/html" title="本地远程连接服务器的jupyter notebook" /><published>2020-09-27T23:23:03+08:00</published><updated>2020-09-27T23:23:03+08:00</updated><id>http://localhost:4444/jekyll/update/2020/09/27/jupyter-remote</id><content type="html" xml:base="http://localhost:4444/jekyll/update/2020/09/27/jupyter-remote.html">&lt;p&gt;本地机器远程连接服务器的jupyter notebook&lt;/p&gt;
 
 &lt;p&gt;当你在服务器上想使用jupyter notebook的时候，你的第一反应是不是使用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;ssh -X user@hostname&lt;/code&gt;连接服务器，然后直接&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;jupyter notebook&lt;/code&gt;打开呢？这种操作需要在服务器的浏览器中打开jupyter notebook，然后将浏览器的以图形界面的形式通过&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;X11&lt;/code&gt;转发回本地，所以实质上是在服务器的浏览器上进行操作。这种方式主要有两个局限性，首先可能会很卡，相信你在服务器上使用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;python&lt;/code&gt;画图或者使用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;evince **.pdf&lt;/code&gt;打开&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pdf&lt;/code&gt;的时候也有这种感受。其次，如果你的本地机器不是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;linux&lt;/code&gt;或者&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mac&lt;/code&gt;，而是&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;windows&lt;/code&gt;的时候，你需要借助&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;X11&lt;/code&gt;转发工具才能打开图形界面，比如使用&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Xshell&lt;/code&gt;之类的工具。&lt;/p&gt;
 

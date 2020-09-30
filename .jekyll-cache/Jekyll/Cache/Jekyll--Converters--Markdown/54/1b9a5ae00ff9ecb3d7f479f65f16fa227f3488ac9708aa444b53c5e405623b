@@ -1,0 +1,55 @@
+I"n!<p>本地机器远程连接服务器的jupyter notebook</p>
+
+<p>当你在服务器上想使用jupyter notebook的时候，你的第一反应是不是使用<code class="language-plaintext highlighter-rouge">ssh -X user@hostname</code>连接服务器，然后直接<code class="language-plaintext highlighter-rouge">jupyter notebook</code>打开呢？这种操作需要在服务器的浏览器中打开jupyter notebook，然后将浏览器的以图形界面的形式通过<code class="language-plaintext highlighter-rouge">X11</code>转发回本地，所以实质上是在服务器的浏览器上进行操作。这种方式主要有两个局限性，首先可能会很卡，相信你在服务器上使用<code class="language-plaintext highlighter-rouge">python</code>画图或者使用<code class="language-plaintext highlighter-rouge">evince **.pdf</code>打开<code class="language-plaintext highlighter-rouge">pdf</code>的时候也有这种感受。其次，如果你的本地机器不是<code class="language-plaintext highlighter-rouge">linux</code>或者<code class="language-plaintext highlighter-rouge">mac</code>，而是<code class="language-plaintext highlighter-rouge">windows</code>的时候，你需要借助<code class="language-plaintext highlighter-rouge">X11</code>转发工具才能打开图形界面，比如使用<code class="language-plaintext highlighter-rouge">Xshell</code>之类的工具。</p>
+
+<p>其实，是可以将服务器的<code class="language-plaintext highlighter-rouge">jupyter notebook</code>在本地的浏览器中打开的，这样不需要传输图形界面，几乎不会卡顿，在<code class="language-plaintext highlighter-rouge">windows</code>上也能够很好的操作。</p>
+
+<h4 id="1-登录服务器安装好jupyter-notebook生成配置文件">1. 登录服务器，安装好jupyter notebook，生成配置文件：</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ jupyter notebook --generate-config
+Writing default config to: /home/xxx/.jupyter/jupyter_notebook_config.py
+# jupyter_notebook_config.py 就是配置文件
+</code></pre></div></div>
+
+<h4 id="2-使用-ipython-生成密码">2. 使用 <code class="language-plaintext highlighter-rouge">Ipython</code> 生成密码</h4>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="kn">from</span> <span class="nn">notebook.auth</span> <span class="kn">import</span> <span class="n">passwd</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="n">passwd</span><span class="p">()</span>
+<span class="n">Enter</span> <span class="n">password</span><span class="p">:</span>
+<span class="n">Verify</span> <span class="n">password</span><span class="p">:</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="s">'sha1:*********************************c'</span>
+<span class="c1"># Enter password 是在本地浏览器登陆使用的密码，Out[2] 输出的是填写在配置文件中的密钥
+</span>
+<span class="n">In</span> <span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="nb">exit</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h4 id="3-编辑配置文件">3. 编辑配置文件</h4>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span> <span class="n">vim</span> <span class="o">~/</span><span class="p">.</span><span class="n">jupyter</span><span class="o">/</span><span class="n">jupyter_notebook_config</span><span class="p">.</span><span class="n">py</span>
+<span class="c1"># 在该文件中搜索以下配置，没有的话就添加
+</span>
+<span class="n">c</span><span class="p">.</span><span class="n">NotebookApp</span><span class="p">.</span><span class="n">allow_remote_access</span> <span class="o">=</span> <span class="bp">True</span>    <span class="c1"># 可能没有需要自己添加
+</span><span class="n">c</span><span class="p">.</span><span class="n">NotebookApp</span><span class="p">.</span><span class="n">ip</span> <span class="o">=</span> <span class="s">'*'</span>
+<span class="n">c</span><span class="p">.</span><span class="n">NotebookApp</span><span class="p">.</span><span class="n">open_browser</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="n">c</span><span class="p">.</span><span class="n">NotebookApp</span><span class="p">.</span><span class="n">password</span> <span class="o">=</span> <span class="s">u'sha1:*********************************c'</span> <span class="c1"># 填写刚才在第二步Out[2]生成的密钥
+</span><span class="n">c</span><span class="p">.</span><span class="n">NotebookApp</span><span class="p">.</span><span class="n">port</span> <span class="o">=</span> <span class="mi">2020</span>   <span class="c1"># 自己设置一个就行
+# 完成后保存退出
+</span></code></pre></div></div>
+
+<h4 id="4-运行">4. 运行</h4>
+<p>在服务器运行 <code class="language-plaintext highlighter-rouge">jupyter notebook</code>。
+然后在本地打开浏览器，网址处输入<code class="language-plaintext highlighter-rouge">hostname:port</code>，其中<code class="language-plaintext highlighter-rouge">hostname</code>就是服务器的<code class="language-plaintext highlighter-rouge">ip</code>地址， <code class="language-plaintext highlighter-rouge">port</code>是在配置中设置的，如刚才设置的是<code class="language-plaintext highlighter-rouge">2020</code>。例子 <code class="language-plaintext highlighter-rouge">222.119.152.73:2020</code>，然后输入在第二步设置的密码即可。</p>
+<blockquote>
+  <p>必须在服务器上打开<code class="language-plaintext highlighter-rouge">jupyter notebook</code>才能在本地浏览器使用。</p>
+</blockquote>
+
+<h4 id="5-另一种设置">5. 另一种设置</h4>
+<p>第四步是一种简单的方式，在有些情况下可能不适用，比如<strong>不知道服务器的ip地址</strong>（使用别名），或者<strong>登陆时需要指定端口</strong>（比如执行<code class="language-plaintext highlighter-rouge">ssh -p 5025 user@feg.org</code>登陆，<code class="language-plaintext highlighter-rouge">-p 5025</code>是端口， <code class="language-plaintext highlighter-rouge">feg.org</code>是别名）。这时候，我们需要进行以下设置：</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ssh</span> <span class="o">-</span><span class="n">N</span> <span class="o">-</span><span class="n">f</span> <span class="o">-</span><span class="n">L</span> <span class="n">localhost</span><span class="p">:</span><span class="mi">8888</span><span class="p">:</span><span class="n">localhost</span><span class="p">:</span><span class="mi">2020</span> <span class="n">username</span><span class="o">@</span><span class="n">serverIP</span>
+</code></pre></div></div>
+<p>使用一个例子，登陆服务器时使用<code class="language-plaintext highlighter-rouge">ssh -p 5025 xxx@feg.org</code>，在<code class="language-plaintext highlighter-rouge">jupyter_notebook_config.py</code>里面设置的端口为<code class="language-plaintext highlighter-rouge">2020</code>，则需要运行：</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ssh</span> <span class="o">-</span><span class="n">N</span> <span class="o">-</span><span class="n">f</span> <span class="o">-</span><span class="n">L</span> <span class="n">localhost</span><span class="p">:</span><span class="mi">8888</span><span class="p">:</span><span class="n">localhost</span><span class="p">:</span><span class="mi">2020</span> <span class="o">-</span><span class="n">p</span> <span class="mi">5025</span> <span class="n">xxx</span><span class="o">@</span><span class="n">feg</span><span class="p">.</span><span class="n">org</span>
+</code></pre></div></div>
+<p>然后打开浏览器，在网址栏输入</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">localhost</span><span class="p">:</span><span class="mi">8888</span>
+</code></pre></div></div>
+<p>然后输入之前设置的密码登陆即可。</p>
+:ET
