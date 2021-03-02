@@ -24,4 +24,12 @@
 <url>
 <loc>http://localhost:4444/publications/</loc>
 </url>
+<url>
+<loc>http://localhost:4444/file/Li2020SEG-super-resolution-denoising.pdf</loc>
+<lastmod>2021-03-02T20:24:45+08:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4444/file/Li2021TGRS-super-resolution-denoising.pdf</loc>
+<lastmod>2021-03-02T20:24:45+08:00</lastmod>
+</url>
 </urlset>
